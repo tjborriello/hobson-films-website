@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hobson Films — Capturing your world.</title>
+  <link rel="stylesheet" href="site.css?v=18" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="Buttons.jsx"></script>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+  <script type="text/babel" src="Hero.jsx"></script>
+  <script type="text/babel" src="Strips.jsx"></script>
+  <script type="text/babel" src="WorkGrid.jsx"></script>
+  <script type="text/babel" src="ProjectDetail.jsx"></script>
+  <script type="text/babel" src="ReelOverlay.jsx"></script>
+  <script type="text/babel" src="VimeoModal.jsx"></script>
+  <script type="text/babel" src="ContactForm.jsx"></script>
+  <script type="text/babel" src="About.jsx"></script>
+  <script type="text/babel" src="Admin.jsx"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [route, setRoute] = useState('home');
+      const [project, setProject] = useState(null);
+      const [reelOpen, setReelOpen] = useState(false);
+      const [vimeoFor, setVimeoFor] = useState(null); // project, or null
+      const [filter, setFilter] = useState('All');
+      const [projects, setProjectsState] = useState(loadProjects());
+      const [adminOn, setAdminOn] = useState(false);
+      const [editing, setEditing] = useState(null); // {project, isNew}
+
+      // Persist on every change
+      useEffect(() => { saveProjects(projects); }, [projects]);
+
+      const openProject = (p) => {
+        // If the project has a Vimeo video, open it in the modal player.
+        // Otherwise fall back to the project detail page.
+        if (p && extractVimeoId(p.vimeo)) {
+          setVimeoFor(p);
+          return;
+        }
+        setProject(p); setRoute('project'); window.scrollTo(0,0);
+      };
+      const back = () => { setRoute('work'); window.scrollTo(0,0); };
+      const goRoute = (r) => { setRoute(r); window.scrollTo(0,0); };
+
+      const onAddProject = () => setEditing({ project: newProject(), isNew: true });
+      const onEditProject = (p) => setEditing({ project: p, isNew: false });
+      const onSaveProject = (draft) => {
+        setProjectsState(prev => {
+          const exists = prev.find(p => p.id === draft.id);
+          if (exists) return prev.map(p => p.id === draft.id ? draft : p);
+          return [draft, ...prev];
+        });
+        setEditing(null);
+      };
+      const onDeleteProject = () => {
+        const id = editing.project.id;
+        setProjectsState(prev => prev.filter(p => p.id !== id));
+        setEditing(null);
+      };
+      const onReorder = (fromIdx, toIdx) => {
+        setProjectsState(prev => {
+          // Reorder within the currently-displayed list — but operate on full list
+          // by mapping displayed indexes back to source.
+          const visible = filter === 'All' ? prev : prev.filter(p => p.cat === filter);
+          const movedId = visible[fromIdx].id;
+          const targetId = visible[toIdx].id;
+          const next = [...prev];
+          const fIdx = next.findIndex(p => p.id === movedId);
+          const tIdx = next.findIndex(p => p.id === targetId);
+          const [removed] = next.splice(fIdx, 1);
+          next.splice(tIdx, 0, removed);
+          return next;
+        });
+      };
+      const onResetSeed = () => {
+        if (confirm('Reset portfolio to the seed (12 projects from the existing site)? Your custom changes will be lost.')) {
+          resetProjects();
+          setProjectsState(SEED_PROJECTS);
+        }
+      };
+      const onExport = () => {
+        const blob = new Blob([JSON.stringify(projects, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'hobsonfilms-portfolio.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+
+      const isLightPage = route === 'work' || route === 'contact';
+
+      return (
+        <div className={isLightPage ? 'is-light-page' : ''}>
+          <Header route={route} setRoute={goRoute} onOpenReel={() => setReelOpen(true)} />
+          <main>
+            {route === 'home' && (
+              <div data-screen-label="Home">
+                <Hero onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
+                <Marquee />
+                <WorkGrid
+                  projects={projects}
+                  filter={filter}
+                  setFilter={setFilter}
+                  onOpenProject={openProject}
+                  compact
+                  adminOn={adminOn}
+                  onEditProject={onEditProject}
+                  onAddProject={onAddProject}
+                  onReorder={onReorder}
+                />
+                <Stats />
+                <About setRoute={goRoute} />
+                <CtaStrip onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
+              </div>
+            )}
+            {route === 'work' && (
+              <div data-screen-label="Work" className="hf-pad-top">
+                <WorkGrid
+                  projects={projects}
+                  filter={filter}
+                  setFilter={setFilter}
+                  onOpenProject={openProject}
+                  adminOn={adminOn}
+                  onEditProject={onEditProject}
+                  onAddProject={onAddProject}
+                  onReorder={onReorder}
+                />
+              </div>
+            )}
+            {route === 'about' && (
+              <div data-screen-label="About">
+                <About setRoute={goRoute} asPage />
+                <CtaStrip onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
+              </div>
+            )}
+            {route === 'project' && (
+              <div data-screen-label="Project detail">
+                <ProjectDetail
+                  project={project}
+                  allProjects={projects}
+                  onBack={back}
+                  onOpenProject={openProject}
+                />
+              </div>
+            )}
+            {route === 'contact' && (
+              <div data-screen-label="Contact" className="hf-pad-top">
+                <ContactForm />
+              </div>
+            )}
+          </main>
+          <Footer setRoute={goRoute} onOpenReel={() => setReelOpen(true)} />
+          <ReelOverlay open={reelOpen} onClose={() => setReelOpen(false)} />
+          <VimeoModal project={vimeoFor} onClose={() => setVimeoFor(null)} />
+          <AdminBar
+            adminOn={adminOn}
+            onToggle={() => setAdminOn(v => !v)}
+            onAdd={onAddProject}
+            onReset={onResetSeed}
+            onExport={onExport}
+          />
+          {editing && (
+            <ProjectEditor
+              project={editing.project}
+              isNew={editing.isNew}
+              onSave={onSaveProject}
+              onCancel={() => setEditing(null)}
+              onDelete={onDeleteProject}
+            />
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

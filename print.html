@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hobson Films — Capturing your world. (Print)</title>
+  <link rel="stylesheet" href="site.css?v=18" />
+  <style>
+    /* Print-specific overrides. Each route stacks as a static section,
+       paginated on print. All interactive chrome is hidden. */
+
+    /* Use a fixed "screen" width so the layout looks consistent in PDF
+       regardless of the user's window size. */
+    html, body { background: #ffffff; }
+    body { margin: 0; }
+
+    /* Each route renders as a "page" — a tall content block with a hard
+       page break between. Inside each page we keep the existing layout. */
+    .pdf-page {
+      break-after: page;
+      page-break-after: always;
+      position: relative;
+    }
+    .pdf-page:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    /* Tell the rendered headers they're embedded in a stacked doc, not a
+       single SPA. Each page repeats its own header. */
+    .pdf-page .hf-header {
+      position: relative !important;
+    }
+
+    /* Hide all interactive / runtime chrome that doesn't make sense in a PDF. */
+    .hf-admin-bar,
+    .hf-modal,
+    .hf-reel,
+    .hf-vimeo,
+    .hf-tile__edit { display: none !important; }
+
+    /* Disable hover/transition effects so the static export looks crisp. */
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    /* Show all 12 tiles on the home featured-work grid (in print, we want
+       the full archive to be browseable in one shot). */
+    .pdf-show-all-tiles .hf-work--compact .hf-tile { display: block !important; }
+
+    @media print {
+      @page {
+        size: 1200px 1600px;
+        margin: 0;
+      }
+      html, body {
+        width: 1200px;
+      }
+      .pdf-page {
+        width: 1200px;
+        page-break-after: always;
+        break-after: page;
+      }
+      .pdf-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      /* Force the cream and orange backgrounds to actually print. */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
+    /* On-screen preview: stack pages with a visual separator so the
+       pre-print preview is also readable. */
+    @media screen {
+      .pdf-page {
+        max-width: 1200px;
+        margin: 0 auto 24px;
+        background: #fff;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      }
+      body { background: #f3f3f1; padding: 24px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="Buttons.jsx"></script>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+  <script type="text/babel" src="Hero.jsx"></script>
+  <script type="text/babel" src="Strips.jsx"></script>
+  <script type="text/babel" src="WorkGrid.jsx"></script>
+  <script type="text/babel" src="ProjectDetail.jsx"></script>
+  <script type="text/babel" src="ReelOverlay.jsx"></script>
+  <script type="text/babel" src="VimeoModal.jsx"></script>
+  <script type="text/babel" src="ContactForm.jsx"></script>
+  <script type="text/babel" src="About.jsx"></script>
+  <script type="text/babel" src="Admin.jsx"></script>
+
+  <script type="text/babel">
+    function PrintApp() {
+      const [projects] = React.useState(loadProjects());
+      const [filter, setFilter] = React.useState('All');
+      const noop = () => {};
+
+      // Each route is wrapped in a .pdf-page so it gets its own PDF page.
+      // We render Home (full), Work (full grid), About (asPage), and Contact.
+      return (
+        <div className="pdf-show-all-tiles">
+          {/* PAGE 1 — HOME */}
+          <div className="pdf-page" data-screen-label="01 Home">
+            <Header route="home" setRoute={noop} onOpenReel={noop} />
+            <main>
+              <Hero onOpenReel={noop} setRoute={noop} />
+              <Marquee />
+              <WorkGrid
+                projects={projects}
+                filter={filter}
+                setFilter={setFilter}
+                onOpenProject={noop}
+                compact
+              />
+              <Stats />
+              <About setRoute={noop} />
+              <CtaStrip onOpenReel={noop} setRoute={noop} />
+            </main>
+            <Footer setRoute={noop} onOpenReel={noop} />
+          </div>
+
+          {/* PAGE 2 — WORK */}
+          <div className="pdf-page is-light-page" data-screen-label="02 Work">
+            <Header route="work" setRoute={noop} onOpenReel={noop} />
+            <main>
+              <div className="hf-pad-top">
+                <WorkGrid
+                  projects={projects}
+                  filter="All"
+                  setFilter={noop}
+                  onOpenProject={noop}
+                />
+              </div>
+            </main>
+            <Footer setRoute={noop} onOpenReel={noop} />
+          </div>
+
+          {/* PAGE 3 — ABOUT */}
+          <div className="pdf-page" data-screen-label="03 About">
+            <Header route="about" setRoute={noop} onOpenReel={noop} />
+            <main>
+              <About setRoute={noop} asPage />
+              <CtaStrip onOpenReel={noop} setRoute={noop} />
+            </main>
+            <Footer setRoute={noop} onOpenReel={noop} />
+          </div>
+
+          {/* PAGE 4 — CONTACT */}
+          <div className="pdf-page is-light-page" data-screen-label="04 Contact">
+            <Header route="contact" setRoute={noop} onOpenReel={noop} />
+            <main>
+              <div className="hf-pad-top">
+                <ContactForm />
+              </div>
+            </main>
+            <Footer setRoute={noop} onOpenReel={noop} />
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<PrintApp />);
+
+    // Auto-print once everything is settled: fonts loaded, React + Babel done,
+    // images had a moment to fetch.
+    (async () => {
+      try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+      // Wait for images to finish loading so the print snapshot is complete.
+      await new Promise(r => {
+        if (document.readyState === 'complete') return r();
+        window.addEventListener('load', () => r(), { once: true });
+      });
+      // Extra grace period for Babel JSX → DOM hydration and any background-image fetches.
+      await new Promise(r => setTimeout(r, 800));
+      window.print();
+    })();
+  </script>
+</body>
+</html>
