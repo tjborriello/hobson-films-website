@@ -8,13 +8,6 @@ function Hero({ onOpenReel, setRoute }) {
       </div>
       <div className="hf-hero__scrim" />
       <div className="hf-hero__inner">
-        <div className="hf-hero__topmeta">
-          <span className="hf-meta hf-meta--strong-light">
-            <span className="hf-hero__live"></span>REEL 2026 · NOW PLAYING
-          </span>
-          <span className="hf-meta hf-meta--strong-light">DIR. OF PHOTOGRAPHY · ROB HOBSON</span>
-        </div>
-
         <div className="hf-hero__main">
           <span className="hf-eyebrow" style={{color: 'var(--hf-orange)'}}>HOBSON FILMS · DIRECTOR OF PHOTOGRAPHY</span>
           <h1 className="hf-hero__title">Capturing<br/><em>your world.</em></h1>
