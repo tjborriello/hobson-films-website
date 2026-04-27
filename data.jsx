@@ -2,7 +2,7 @@
 // Portfolio data layer with localStorage persistence.
 // Seeded from the existing hobsonfilms.com portfolio entries.
 
-const STORAGE_KEY = 'hobsonfilms.portfolio.v6';
+const STORAGE_KEY = 'hobsonfilms.portfolio.v7';
 
 const SEED_PROJECTS = [
   {
@@ -78,6 +78,55 @@ const SEED_PROJECTS = [
     ],
   },
   {
+    id: 'untying-the-knot',
+    title: 'Untying the Knot',
+    sub: 'Zen and the Art of Marriage Maintenance.',
+    client: 'Bravo',
+    cat: 'Reality',
+    year: 2016,
+    img: 'assets/thumbs/untying-the-knot.jpeg',
+    vimeo: '180927164',
+    span: 'std',
+    role: 'Director of Photography',
+    camera: 'Sony FS7',
+    lenses: 'Canon 17-120 + primes',
+    format: '4K · 24p · XAVC',
+    lede: 'Observational reality. Long days, real conversations, two cameras catching what mattered.',
+    body: 'A docu-style series that lived or died on coverage. We shot loose-handheld with a B-cam shoulder rig, designed so an interview never had to break for a reset. Lighting was minimal — soft fill from a window source where possible.',
+    credits: [
+      { role: 'Director', name: 'R. Khan' },
+      { role: 'DP', name: 'Rob Hobson' },
+      { role: 'B-Cam', name: 'T. Reed' },
+      { role: 'Sound', name: 'B. Aguilar' },
+      { role: 'Producer', name: 'Bravo' },
+    ],
+  },
+  {
+    id: 'black-keys',
+    title: 'The Black Keys',
+    sub: 'MTV’s Live in NYC.',
+    client: 'MTV',
+    cat: 'Music',
+    year: 2017,
+    img: 'assets/thumbs/black-keys.jpeg',
+    vimeo: '88960482',
+    span: 'tall',
+    role: 'Director of Photography',
+    camera: 'ARRI Alexa Mini + RED',
+    lenses: 'Zeiss Master Primes',
+    format: '4.5K · 24p · ProRes 4444',
+    lede: 'Live performance, single venue, four cameras. The band played, we caught it. No second takes.',
+    body: 'Live music is unforgiving — one shot, no resets. We ran a four-camera package: two on dollies in the pit, one locked-off wide, and a long lens roving the balcony. Lighting was the venue rig, augmented with two backlights we put up for the band. Color was finished in-house off the live grade.',
+    credits: [
+      { role: 'Director', name: 'S. Avalos' },
+      { role: 'DP', name: 'Rob Hobson' },
+      { role: 'B-Cam', name: 'T. Reed' },
+      { role: 'C-Cam', name: 'J. Park' },
+      { role: 'Sound', name: 'MTV' },
+      { role: 'Color', name: 'In-house' },
+    ],
+  },
+  {
     id: 'college-hoops-confidential',
     title: 'College Hoops Confidential — Vets Classic',
     sub: 'Follow-doc of the US Naval Academy Basketball Tournament.',
@@ -127,55 +176,6 @@ const SEED_PROJECTS = [
     ],
   },
   {
-    id: 'black-keys',
-    title: 'The Black Keys',
-    sub: 'MTV\u2019s Live in NYC.',
-    client: 'MTV',
-    cat: 'Music',
-    year: 2017,
-    img: 'assets/thumbs/black-keys.jpeg',
-    vimeo: '88960482',
-    span: 'tall',
-    role: 'Director of Photography',
-    camera: 'ARRI Alexa Mini + RED',
-    lenses: 'Zeiss Master Primes',
-    format: '4.5K · 24p · ProRes 4444',
-    lede: 'Live performance, single venue, four cameras. The band played, we caught it. No second takes.',
-    body: 'Live music is unforgiving — one shot, no resets. We ran a four-camera package: two on dollies in the pit, one locked-off wide, and a long lens roving the balcony. Lighting was the venue rig, augmented with two backlights we put up for the band. Color was finished in-house off the live grade.',
-    credits: [
-      { role: 'Director', name: 'S. Avalos' },
-      { role: 'DP', name: 'Rob Hobson' },
-      { role: 'B-Cam', name: 'T. Reed' },
-      { role: 'C-Cam', name: 'J. Park' },
-      { role: 'Sound', name: 'MTV' },
-      { role: 'Color', name: 'In-house' },
-    ],
-  },
-  {
-    id: 'untying-the-knot',
-    title: 'Untying the Knot',
-    sub: 'Zen and the Art of Marriage Maintenance.',
-    client: 'Bravo',
-    cat: 'Reality',
-    year: 2016,
-    img: 'assets/thumbs/untying-the-knot.jpeg',
-    vimeo: '180927164',
-    span: 'std',
-    role: 'Director of Photography',
-    camera: 'Sony FS7',
-    lenses: 'Canon 17-120 + primes',
-    format: '4K · 24p · XAVC',
-    lede: 'Observational reality. Long days, real conversations, two cameras catching what mattered.',
-    body: 'A docu-style series that lived or died on coverage. We shot loose-handheld with a B-cam shoulder rig, designed so an interview never had to break for a reset. Lighting was minimal — soft fill from a window source where possible.',
-    credits: [
-      { role: 'Director', name: 'R. Khan' },
-      { role: 'DP', name: 'Rob Hobson' },
-      { role: 'B-Cam', name: 'T. Reed' },
-      { role: 'Sound', name: 'B. Aguilar' },
-      { role: 'Producer', name: 'Bravo' },
-    ],
-  },
-  {
     id: 'daily-show-podium-pandemonium',
     title: 'Daily Show — Podium Pandemonium',
     sub: 'With Trevor Noah.',
@@ -200,9 +200,9 @@ const SEED_PROJECTS = [
   },
   {
     id: 'womens-health',
-    title: 'Women\u2019s Health',
-    sub: 'Kayla Itsines\u2019 workout video.',
-    client: 'Women\u2019s Health',
+    title: 'Women’s Health',
+    sub: 'Kayla Itsines’ workout video.',
+    client: 'Women’s Health',
     cat: 'Corporate',
     year: 2017,
     img: 'assets/thumbs/womens-health.jpeg',
@@ -212,7 +212,7 @@ const SEED_PROJECTS = [
     camera: 'ARRI Alexa Mini',
     lenses: 'Cooke S4',
     format: '4.5K · 24p · ProRes 4444',
-    lede: 'A workout series for Women\u2019s Health — clean, athletic, kinetic.',
+    lede: 'A workout series for Women’s Health — clean, athletic, kinetic.',
     body: 'Two-camera package on a cyc stage. We used a slider for the wide profile and a handheld B for closer work. Color held a slight push toward green to keep the skin tones true on stage lighting.',
     credits: [
       { role: 'Director', name: 'WH Editorial' },
@@ -281,7 +281,7 @@ const SEED_PROJECTS = [
     lenses: '24-105 + 50mm',
     format: '4K · 24p · XAVC',
     lede: 'Portraits of subway performers underground. Real people, real reverb.',
-    body: 'A guerrilla doc shot across six subway stations. Two cameras, no permits where the law didn\u2019t require them, full permits where it did. Lighting was the platform fluorescents and a small on-camera LED. Audio was wrapped on the performers.',
+    body: 'A guerrilla doc shot across six subway stations. Two cameras, no permits where the law didn’t require them, full permits where it did. Lighting was the platform fluorescents and a small on-camera LED. Audio was wrapped on the performers.',
     credits: [
       { role: 'Director', name: 'Independent' },
       { role: 'DP', name: 'Rob Hobson' },
@@ -303,7 +303,7 @@ const SEED_PROJECTS = [
     lenses: 'Canon CN-E',
     format: '1080p · 24p',
     lede: 'A live poetry showcase staged at the Garden. Performers, court, crowd.',
-    body: 'A three-camera live capture for the Knicks\u2019 community-event series. We used the venue\u2019s house lighting and added a single hard backlight for the poets. The edit needed long takes — we kept rolling.',
+    body: 'A three-camera live capture for the Knicks’ community-event series. We used the venue’s house lighting and added a single hard backlight for the poets. The edit needed long takes — we kept rolling.',
     credits: [
       { role: 'Director', name: 'NYK Productions' },
       { role: 'DP', name: 'Rob Hobson' },
@@ -314,12 +314,13 @@ const SEED_PROJECTS = [
 
 function loadProjects() {
   try {
-    // Migrate: clear any old v1 storage so the fresh seed loads
+    // Migrate: clear any old vN storage so the fresh seed loads
     try { localStorage.removeItem('hobsonfilms.portfolio.v1'); } catch (e) {}
     try { localStorage.removeItem('hobsonfilms.portfolio.v2'); } catch (e) {}
     try { localStorage.removeItem('hobsonfilms.portfolio.v3'); } catch (e) {}
     try { localStorage.removeItem('hobsonfilms.portfolio.v4'); } catch (e) {}
     try { localStorage.removeItem('hobsonfilms.portfolio.v5'); } catch (e) {}
+    try { localStorage.removeItem('hobsonfilms.portfolio.v6'); } catch (e) {}
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return SEED_PROJECTS;
     const parsed = JSON.parse(raw);
