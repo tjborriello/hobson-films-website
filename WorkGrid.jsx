@@ -18,7 +18,7 @@ function WorkGrid({ projects, filter, setFilter, onOpenProject, compact, adminOn
   }, [projects]);
 
   const items = filter === 'All' ? projects : projects.filter(p => p.cat === filter);
-  const display = compact ? items.slice(0, 11) : items;
+  const display = compact ? items.slice(0, 10) : items;
 
   // Drag/drop in admin mode
   const onDragStart = (e, idx) => {
