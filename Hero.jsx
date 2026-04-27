@@ -33,10 +33,6 @@ function Hero({ onOpenReel, setRoute }) {
               <span className="hf-hero__credit-val">Cooke S4</span>
             </div>
           </div>
-          <div className="hf-hero__scroll">
-            <span className="hf-hero__scroll-line"></span>
-            Scroll
-          </div>
         </div>
       </div>
     </section>
