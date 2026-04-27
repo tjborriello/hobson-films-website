@@ -167,7 +167,7 @@ img { display: block; }
 /* ─── Hero ────────────────────────────────────────────────────── */
 .hf-hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 75vh;
   color: var(--fg-inverse);
   overflow: hidden;
   background: var(--hf-ink);
@@ -197,7 +197,7 @@ img { display: block; }
   position: relative; z-index: 2;
   max-width: var(--container-max);
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 75vh;
   padding: 120px var(--container-pad) 64px;
   display: grid;
   grid-template-rows: auto 1fr auto;
