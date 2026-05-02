@@ -1,0 +1,31 @@
+# Files in the deploy directory that Cloudflare wrangler should NOT upload
+# as part of the Workers Assets bundle. Same syntax as .gitignore.
+# Without excluding .git/, the compressed pack file can exceed the 25 MiB
+# per-asset limit and the entire deploy fails.
+
+# Git internals
+.git/
+
+# Wrangler / dev tooling
+.gitignore
+.assetsignore
+wrangler.jsonc
+wrangler.toml
+node_modules/
+
+# Dev docs — not needed at runtime
+README.md
+CLAUDE.md
+
+# Source media — only extracted hero frames are served, not the source video
+hero-source.mp4
+hero-source.mov
+hero-source.webm
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.log
