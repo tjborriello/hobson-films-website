@@ -52,6 +52,28 @@ EOF
 )" && git push origin main
 ```
 
+## Hero scroll-locked camera animation
+
+The hero has a scroll-driven background animation: an exploded ARRI Alexa Mini LF camera assembles as the user scrolls.
+
+**Architecture:**
+- `assets/hero-frames/frame-0001.jpg` … `frame-0073.jpg` — 73 JPEG frames at 1024×576, ~60 KB each, ~4.3 MB total. Extracted from a 6s/24fps AI-generated source video by taking every 2nd frame.
+- `HeroScrollBg.jsx` — preloads all 73 frames as `Image()` objects, draws the current frame to a `<canvas>` based on scroll progress through the wrap. Uses rAF throttling and falls back to the nearest loaded frame if a target frame isn't yet decoded. Honors `prefers-reduced-motion` (pins to final frame, no scroll listener).
+- `Hero.jsx` — wraps the `<section class="hf-hero">` in a taller `<div class="hf-hero-wrap">` so the hero can be `position: sticky; top: 0` while the wrap scrolls underneath.
+- `site.css` — `.hf-hero-wrap` defines two CSS variables that control the pin/animation timing:
+  - `--hf-hero-anim` (currently `200vh`) — scroll distance over which the camera assembles. ~100px per wheel tick on 1080p, so 200vh ≈ 20 ticks.
+  - `--hf-hero-hold` (currently `50vh`) — extra pin time after animation completes (assembled camera shows briefly before page unsticks).
+  - Wrap height = `calc(100vh + var(--hf-hero-anim) + var(--hf-hero-hold))`.
+
+**Tuning:** to change pacing, only the two CSS variables need editing. The JS reads `--hf-hero-anim` from the wrap element's computed style and uses it to calculate progress. Don't hardcode values in the JSX; keep them in CSS.
+
+**The source video** (`hero-source.mp4`) is `.gitignore`-d. Only the extracted frames are committed. To regenerate frames from a new source:
+1. Drop the new `hero-source.mp4` in the repo root
+2. Run: `ffmpeg -i hero-source.mp4 -vf "select='not(mod(n,2))',setpts=N/FRAME_RATE/TB,scale=1024:-2" -fps_mode vfr -q:v 4 assets/hero-frames/frame-%04d.jpg`
+3. Update `HERO_BG_FRAME_COUNT` in `HeroScrollBg.jsx` if the new source has a different total
+
+**FFmpeg installed location** on this Windows machine: `C:\Users\tjbor\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin\ffmpeg.exe`. Path may not be in shell PATH after a fresh terminal — invoke by full path or restart shell.
+
 ## Cache-busting on visible changes
 
 When CSS or `data.jsx` changes affect what visitors see:

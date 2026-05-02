@@ -5,3 +5,8 @@ desktop.ini
 .vscode/
 .idea/
 node_modules/
+
+# Hero animation source videos — only the extracted frames are committed
+hero-source.mp4
+hero-source.mov
+hero-source.webm

@@ -165,9 +165,27 @@ img { display: block; }
 }
 
 /* ─── Hero ────────────────────────────────────────────────────── */
-.hf-hero {
+/* Outer wrap that gives the hero scroll-locked length. The hero stays
+   sticky-pinned to the viewport top while the user scrolls through the
+   wrap's extra height; that extra height is what drives the camera
+   assembly animation. Tune --hf-hero-pin to make the animation longer
+   (e.g. 100vh) or shorter (e.g. 30vh). */
+.hf-hero-wrap {
   position: relative;
-  min-height: 75vh;
+  /* The hero pin is split into two phases:
+     1. --hf-hero-anim — scroll distance over which the camera assembles
+     2. --hf-hero-hold — additional pin time after animation completes
+        (camera shows fully assembled before the page unsticks).
+     ~100px per wheel tick on a 1080p monitor, so 200vh ≈ 20 ticks. */
+  --hf-hero-anim: 200vh;
+  --hf-hero-hold: 50vh;
+  height: calc(100vh + var(--hf-hero-anim) + var(--hf-hero-hold));
+}
+
+.hf-hero {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   color: var(--fg-inverse);
   overflow: hidden;
   background: var(--hf-ink);
@@ -185,23 +203,44 @@ img { display: block; }
 }
 .hf-hero__scrim {
   position: absolute; inset: 0;
+  z-index: 1;
+  /* Heavier dim on the left (where the text sits) fading lighter on the
+     right so the camera focal point stays visible. Plus a vertical
+     fade-to-dark at the very bottom for contrast against the marquee. */
   background:
+    linear-gradient(95deg,
+      rgba(11,11,12,0.72) 0%,
+      rgba(11,11,12,0.5) 35%,
+      rgba(11,11,12,0.22) 70%,
+      rgba(11,11,12,0.18) 100%),
     linear-gradient(180deg,
-      rgba(11,11,12,0.65) 0%,
-      rgba(11,11,12,0.15) 22%,
-      rgba(11,11,12,0.15) 45%,
-      rgba(11,11,12,0.55) 75%,
-      rgba(11,11,12,0.92) 100%);
+      rgba(11,11,12,0) 60%,
+      rgba(11,11,12,0.55) 100%);
 }
 .hf-hero__inner {
   position: relative; z-index: 2;
   max-width: var(--container-max);
   margin: 0 auto;
-  min-height: 75vh;
+  height: 100%;
   padding: 120px var(--container-pad) 64px;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Scroll-controlled animated background — full bleed behind text & scrim */
+.hf-hero-scrollbg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hf-hero-scrollbg__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .hf-hero__topmeta {
   display: flex; justify-content: space-between; align-items: center;
@@ -214,8 +253,11 @@ img { display: block; }
   animation: hfPulse 2.4s ease-in-out infinite;
 }
 .hf-hero__main {
-  align-self: end;
   display: flex; flex-direction: column; gap: 28px;
+  /* Cap text width so it doesn't extend across the camera focal area on
+     wide screens — keeps the right side of the hero visible for the
+     animation. */
+  max-width: 720px;
 }
 .hf-hero__title {
   font-family: var(--font-display);
