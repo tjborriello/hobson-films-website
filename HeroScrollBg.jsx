@@ -1,8 +1,8 @@
 /* global React */
 const { useEffect: useEffectBG, useRef: useRefBG } = React;
 
-const HERO_BG_FRAME_COUNT = 73;
-const HERO_BG_FRAME_PATH = (n) => `assets/hero-frames/frame-${String(n).padStart(4, '0')}.jpg`;
+const HERO_BG_FRAME_COUNT = 49;
+const HERO_BG_FRAME_PATH = (n) => `assets/hero-frames/frame-${String(n).padStart(4, '0')}.jpg?v=2`;
 
 function HeroScrollBg() {
   const containerRef = useRefBG(null);

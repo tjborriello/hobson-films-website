@@ -10,3 +10,6 @@ node_modules/
 hero-source.mp4
 hero-source.mov
 hero-source.webm
+
+# Reference assets used for AI video/image generation — local-only iteration files
+resources/
