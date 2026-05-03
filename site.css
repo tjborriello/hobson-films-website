@@ -270,33 +270,38 @@ img { display: block; }
    portion, text in the lower half, with a vertical-only scrim. */
 @media (max-width: 768px) {
   .hf-hero-scrollbg {
-    /* Pin the animation to the top portion of the hero rather than full-bleed */
+    /* Pin the animation to the top portion of the hero rather than full-bleed.
+       70vh "zooms in" the camera vs the prior 55vh (taller area means the
+       cover-fit scale ratio increases, so the camera body renders larger). */
     inset: auto;
     top: 0;
     left: 0;
     right: 0;
-    height: 55vh;
+    height: 70vh;
   }
   .hf-hero-scrollbg__canvas {
-    /* Source has the camera at ~65% horizontal. With cover on a narrow
-       portrait viewport the default 50% center anchor crops it off the
-       right edge. Shifting the visible window rightward brings the
-       camera body back toward the center of the visible area. */
-    object-position: 80% center;
+    /* Lower object-position % shifts the visible window leftward in the
+       source — counterintuitively, that moves the right-of-source camera
+       body rightward in the canvas. 70% lands the camera just past
+       canvas center to the right. */
+    object-position: 70% center;
   }
   .hf-hero__inner {
-    /* Push text block to the bottom half of the hero */
-    justify-content: flex-end;
+    /* justify-content: center vertically centers the text block in the
+       inner's flex content area. With the inner's 120px top / 64px bottom
+       padding, the text block's visual center lands ~53% from the top of
+       the hero — just below the vertical center, as requested. */
+    justify-content: center;
   }
   .hf-hero__scrim {
-    /* Replace the desktop's left-heavy horizontal gradient with a
-       vertical one: clear at the top (camera fully visible) and
-       darkening toward the bottom (text legibility). */
+    /* Bring some dim back across the whole hero so the camera reads as a
+       background element. Dim is light at the top (camera only) and ramps
+       up toward the bottom (where text overlaps the camera area). */
     background:
       linear-gradient(180deg,
-        rgba(11,11,12,0)    0%,
-        rgba(11,11,12,0)   30%,
-        rgba(11,11,12,0.45) 50%,
+        rgba(11,11,12,0.22) 0%,
+        rgba(11,11,12,0.30) 40%,
+        rgba(11,11,12,0.55) 55%,
         rgba(11,11,12,0.78) 80%,
         rgba(11,11,12,0.92) 100%);
   }
