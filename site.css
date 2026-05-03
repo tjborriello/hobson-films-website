@@ -262,6 +262,46 @@ img { display: block; }
 }
 .hf-hero__actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 
+/* ─── Hero mobile layout ──────────────────────────────────────────
+   On narrow viewports the desktop side-by-side composition (text
+   left, camera right) doesn't translate — the camera in the source
+   frame is offset right, which on a portrait phone gets cropped off
+   the visible area. So on mobile we restack: camera in the upper
+   portion, text in the lower half, with a vertical-only scrim. */
+@media (max-width: 768px) {
+  .hf-hero-scrollbg {
+    /* Pin the animation to the top portion of the hero rather than full-bleed */
+    inset: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55vh;
+  }
+  .hf-hero-scrollbg__canvas {
+    /* Source has the camera at ~65% horizontal. With cover on a narrow
+       portrait viewport the default 50% center anchor crops it off the
+       right edge. Shifting the visible window rightward brings the
+       camera body back toward the center of the visible area. */
+    object-position: 80% center;
+  }
+  .hf-hero__inner {
+    /* Push text block to the bottom half of the hero */
+    justify-content: flex-end;
+  }
+  .hf-hero__scrim {
+    /* Replace the desktop's left-heavy horizontal gradient with a
+       vertical one: clear at the top (camera fully visible) and
+       darkening toward the bottom (text legibility). */
+    background:
+      linear-gradient(180deg,
+        rgba(11,11,12,0)    0%,
+        rgba(11,11,12,0)   30%,
+        rgba(11,11,12,0.45) 50%,
+        rgba(11,11,12,0.78) 80%,
+        rgba(11,11,12,0.92) 100%);
+  }
+}
+
 /* ─── Marquee strip ───────────────────────────────────────────── */
 .hf-marquee {
   background: var(--hf-ink);
