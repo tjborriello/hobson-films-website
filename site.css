@@ -193,18 +193,19 @@ img { display: block; }
 .hf-hero__scrim {
   position: absolute; inset: 0;
   z-index: 1;
-  /* Heavier dim on the left (where the text sits) fading lighter on the
-     right so the camera focal point stays visible. Plus a vertical
-     fade-to-dark at the very bottom for contrast against the marquee. */
+  /* Heavy dim across the whole hero so the camera reads as a subtle
+     background element. Heaviest on the left (text area), still
+     significantly dimmed on the right (camera area). Plus a vertical
+     fade-to-darker at the bottom for contrast against the marquee. */
   background:
     linear-gradient(95deg,
-      rgba(11,11,12,0.72) 0%,
-      rgba(11,11,12,0.5) 35%,
-      rgba(11,11,12,0.22) 70%,
-      rgba(11,11,12,0.18) 100%),
+      rgba(11,11,12,0.85) 0%,
+      rgba(11,11,12,0.75) 35%,
+      rgba(11,11,12,0.55) 70%,
+      rgba(11,11,12,0.50) 100%),
     linear-gradient(180deg,
-      rgba(11,11,12,0) 60%,
-      rgba(11,11,12,0.55) 100%);
+      rgba(11,11,12,0) 50%,
+      rgba(11,11,12,0.45) 100%);
 }
 .hf-hero__inner {
   position: relative; z-index: 2;
@@ -230,6 +231,22 @@ img { display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Desktop-only canvas positioning. At 16:9 viewports the source image
+   fits the canvas exactly (no crop), so object-position can't shift the
+   camera. Instead, stretch the canvas wider than the viewport — the
+   cover scale increases (camera renders bigger), and offsetting the
+   canvas left lands the camera further right in the visible area. */
+@media (min-width: 769px) {
+  .hf-hero-scrollbg {
+    inset: auto;
+    top: 0;
+    bottom: 0;
+    left: -20%;
+    right: auto;
+    width: 150%;
+  }
 }
 .hf-hero__main {
   display: flex; flex-direction: column; gap: 28px;
