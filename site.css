@@ -270,40 +270,39 @@ img { display: block; }
    portion, text in the lower half, with a vertical-only scrim. */
 @media (max-width: 768px) {
   .hf-hero-scrollbg {
-    /* Pin the animation to the top portion of the hero rather than full-bleed.
-       70vh "zooms in" the camera vs the prior 55vh (taller area means the
-       cover-fit scale ratio increases, so the camera body renders larger). */
+    /* Negative top + larger height work together to land the camera body
+       higher in the visible hero while keeping it big. Source has the
+       camera at vertical center, so canvas top = -15vh + height = 90vh
+       puts the camera body at -15vh + 45vh = 30vh from hero top. */
     inset: auto;
-    top: 0;
+    top: -15vh;
     left: 0;
     right: 0;
-    height: 70vh;
+    height: 90vh;
   }
   .hf-hero-scrollbg__canvas {
     /* Lower object-position % shifts the visible window leftward in the
-       source — counterintuitively, that moves the right-of-source camera
-       body rightward in the canvas. 70% lands the camera just past
-       canvas center to the right. */
-    object-position: 70% center;
+       source — which moves the right-of-source camera body rightward
+       in the canvas. 60% lands the camera further right than 70%. */
+    object-position: 60% center;
   }
   .hf-hero__inner {
-    /* justify-content: center vertically centers the text block in the
-       inner's flex content area. With the inner's 120px top / 64px bottom
-       padding, the text block's visual center lands ~53% from the top of
-       the hero — just below the vertical center, as requested. */
+    /* Vertically centers the text block in the inner's flex content area.
+       With the 120/64 padding, lands ~53% from hero top — just below the
+       vertical center, as requested. */
     justify-content: center;
   }
   .hf-hero__scrim {
-    /* Bring some dim back across the whole hero so the camera reads as a
-       background element. Dim is light at the top (camera only) and ramps
-       up toward the bottom (where text overlaps the camera area). */
+    /* Heavy dim across the whole hero so the camera reads as a subtle
+       background element. Light dim at the top of camera, ramping to
+       near-opaque at the bottom for text contrast. */
     background:
       linear-gradient(180deg,
-        rgba(11,11,12,0.22) 0%,
-        rgba(11,11,12,0.30) 40%,
-        rgba(11,11,12,0.55) 55%,
-        rgba(11,11,12,0.78) 80%,
-        rgba(11,11,12,0.92) 100%);
+        rgba(11,11,12,0.55) 0%,
+        rgba(11,11,12,0.65) 30%,
+        rgba(11,11,12,0.78) 50%,
+        rgba(11,11,12,0.88) 80%,
+        rgba(11,11,12,0.96) 100%);
   }
 }
 
