@@ -334,7 +334,7 @@ img { display: block; }
 }
 .hf-marquee__track {
   display: flex; gap: 64px;
-  animation: hfMarquee 38s linear infinite;
+  animation: hfMarquee 13s linear infinite;
   white-space: nowrap;
 }
 .hf-marquee__item {
@@ -353,6 +353,19 @@ img { display: block; }
 @keyframes hfMarquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+/* On mobile, pin the marquee to the bottom of the viewport so it's fully
+   visible during the hero pin (animation + freeze) instead of being hidden
+   below the fold. Stays fixed for the rest of the home page too. */
+@media (max-width: 768px) {
+  .hf-marquee {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+  }
 }
 
 /* ─── Section heading block ──────────────────────────────────── */
