@@ -179,7 +179,7 @@ img { display: block; }
         (camera shows fully assembled before the page unsticks).
      ~100px per wheel tick on a 1080p monitor, so 200vh ≈ 20 ticks. */
   --hf-hero-anim: 150vh;
-  --hf-hero-hold: 40vh;
+  --hf-hero-hold: 25vh;
   height: calc(100vh + var(--hf-hero-anim) + var(--hf-hero-hold));
   display: flex;
   flex-direction: column;
@@ -298,12 +298,6 @@ img { display: block; }
    the visible area. So on mobile we restack: camera in the upper
    portion, text in the lower half, with a vertical-only scrim. */
 @media (max-width: 768px) {
-  .hf-hero-wrap {
-    /* Shorter freeze on mobile — the pinned animation shouldn't linger
-       as long here as it does on desktop. Desktop keeps the default
-       40vh hold defined above. */
-    --hf-hero-hold: 25vh;
-  }
   .hf-hero-scrollbg {
     /* Negative top + larger height work together to land the camera body
        higher in the visible hero while keeping it big. Source has the
