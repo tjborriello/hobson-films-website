@@ -1,10 +1,15 @@
-/* global React, PrimaryBtn, OutlineBtn, HeroScrollBg */
+/* global React, PrimaryBtn, OutlineBtn, HeroScrollBg, Marquee */
 
 function Hero({ onOpenReel, setRoute }) {
   // Outer wrap is taller than the viewport; the inner section sticks to the
   // top while the user scrolls through the wrap's height. The wrap's scroll
   // progress drives HeroScrollBg's frame index. Once the wrap is fully
   // scrolled past, the page resumes normally and the next section appears.
+  //
+  // The Marquee lives inside the wrap (anchored to its bottom via flex
+  // margin-top:auto). On mobile it gets sticky bottom:0 so it pins to the
+  // viewport bottom during the hero pin period, then scrolls out naturally
+  // as the wrap unsticks. On desktop it just sits at the bottom of the wrap.
   return (
     <div className="hf-hero-wrap">
       <section className="hf-hero">
@@ -22,6 +27,7 @@ function Hero({ onOpenReel, setRoute }) {
           </div>
         </div>
       </section>
+      <Marquee />
     </div>
   );
 }

@@ -168,8 +168,9 @@ img { display: block; }
 /* Outer wrap that gives the hero scroll-locked length. The hero stays
    sticky-pinned to the viewport top while the user scrolls through the
    wrap's extra height; that extra height is what drives the camera
-   assembly animation. Tune --hf-hero-pin to make the animation longer
-   (e.g. 100vh) or shorter (e.g. 30vh). */
+   assembly animation. The Marquee lives inside the wrap, anchored to
+   its bottom via flex margin-top:auto. Tune --hf-hero-pin to make the
+   animation longer (e.g. 100vh) or shorter (e.g. 30vh). */
 .hf-hero-wrap {
   position: relative;
   /* The hero pin is split into two phases:
@@ -180,12 +181,23 @@ img { display: block; }
   --hf-hero-anim: 150vh;
   --hf-hero-hold: 40vh;
   height: calc(100vh + var(--hf-hero-anim) + var(--hf-hero-hold));
+  display: flex;
+  flex-direction: column;
+}
+.hf-hero-wrap > .hf-marquee {
+  /* Push to bottom of wrap so its natural position aligns with where
+     the wrap unsticks. On mobile, sticky bottom:0 keeps it pinned to
+     viewport bottom during the pin period. */
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .hf-hero {
   position: sticky;
   top: 0;
   height: 100vh;
+  /* As a flex child of .hf-hero-wrap, prevent shrinking so 100vh holds */
+  flex-shrink: 0;
   color: var(--fg-inverse);
   overflow: hidden;
   background: var(--hf-ink);
@@ -355,15 +367,14 @@ img { display: block; }
   to { transform: translateX(-50%); }
 }
 
-/* On mobile, pin the marquee to the bottom of the viewport so it's fully
-   visible during the hero pin (animation + freeze) instead of being hidden
-   below the fold. Stays fixed for the rest of the home page too. */
+/* On mobile, the in-wrap marquee gets sticky bottom:0 so it pins to the
+   viewport bottom during the hero pin period (animation + freeze) and
+   then scrolls naturally upward with the hero as the wrap unsticks
+   and leaves the screen. */
 @media (max-width: 768px) {
-  .hf-marquee {
-    position: fixed;
+  .hf-hero-wrap > .hf-marquee {
+    position: sticky;
     bottom: 0;
-    left: 0;
-    right: 0;
     z-index: 5;
   }
 }
