@@ -346,7 +346,7 @@ img { display: block; }
 }
 .hf-marquee__track {
   display: flex; gap: 64px;
-  animation: hfMarquee 13s linear infinite;
+  animation: hfMarquee 6.5s linear infinite;
   white-space: nowrap;
 }
 .hf-marquee__item {
