@@ -11,7 +11,7 @@ function ContactForm() {
         <div className="hf-contact__intro">
           <span className="hf-eyebrow" style={{color: 'var(--hf-orange)'}}>START A PROJECT</span>
           <h2 className="hf-contact__title">Tell me<br/><em>about it.</em></h2>
-          <p className="hf-contact__lead">Booking music videos, broadcast, sports, and brand work. Replies within 24 hours. Day rates and crew packages on request.</p>
+          <p className="hf-contact__lead">Booking music videos, broadcast, sports, and brand work. I usually reply within a day. Day rates and crew packages on request.</p>
           <div className="hf-contact__direct">
             <div><div className="hf-meta">EMAIL</div><div className="hf-contact__direct-val" style={{color: 'var(--hf-orange)'}}>rob@hobsonfilms.com</div></div>
             <div><div className="hf-meta">PHONE</div><div className="hf-contact__direct-val">+1 (212) 555 0184</div></div>
@@ -23,7 +23,7 @@ function ContactForm() {
           {sent ? (
             <div className="hf-form__sent">
               <span className="hf-meta hf-meta--accent">SENT</span>
-              <h3 style={{fontFamily: 'var(--font-display)', fontSize: 36, lineHeight: 1, letterSpacing: '-0.03em', margin: '12px 0 16px', fontWeight: 900}}>Got it.<br/>I'll be in touch within a day.</h3>
+              <h3 style={{fontFamily: 'var(--font-display)', fontSize: 36, lineHeight: 1, letterSpacing: '-0.03em', margin: '12px 0 16px', fontWeight: 900}}>Got it.<br/>I'll be in touch soon.</h3>
               <button type="button" className="hf-link-arrow" onClick={() => { setSent(false); setForm({ name:'', email:'', type:'Music video', when:'', brief:'' }); }}>Send another <span className="arrow">→</span></button>
             </div>
           ) : (
@@ -44,7 +44,7 @@ function ContactForm() {
               <label className="hf-form__full"><span>Tell me about it</span><textarea rows="5" value={form.brief} onChange={upd('brief')} placeholder="Short brief, location, references."></textarea></label>
               <div className="hf-form__actions">
                 <PrimaryBtn type="submit">Send →</PrimaryBtn>
-                <span className="hf-meta">REPLIES WITHIN 24 HOURS</span>
+                <span className="hf-meta">USUALLY REPLIES IN A DAY</span>
               </div>
             </>
           )}

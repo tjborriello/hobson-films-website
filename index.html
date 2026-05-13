@@ -4,9 +4,33 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hobson Films — Capturing your world.</title>
-  <link rel="stylesheet" href="site.css?v=34" />
+  <meta name="description" content="Hobson Films — cinematography by Rob Hobson, DP. A one-DP studio shooting for broadcast and brands. Music, sports, reality, and corporate. Image-driven, story-led, color final in-camera. Based NJ / NYC, available on location." />
+  <meta name="theme-color" content="#E85D24" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+
+  <!-- Open Graph (Facebook, LinkedIn, iMessage, Slack) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Hobson Films" />
+  <meta property="og:title" content="Hobson Films — Capturing your world." />
+  <meta property="og:description" content="Cinematography by Rob Hobson, DP. A one-DP studio shooting for broadcast and brands — image-driven, story-led, color final in-camera." />
+  <meta property="og:image" content="assets/hero-frames/frame-0097.jpg" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="576" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hobson Films — Capturing your world." />
+  <meta name="twitter:description" content="Cinematography by Rob Hobson, DP. Music, sports, reality, and corporate." />
+  <meta name="twitter:image" content="assets/hero-frames/frame-0097.jpg" />
+
+  <link rel="stylesheet" href="site.css?v=35" />
 </head>
 <body>
+  <a class="hf-skip" href="#main">Skip to content</a>
   <div id="root"></div>
 
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
@@ -107,7 +131,7 @@
       return (
         <div className={isLightPage ? 'is-light-page' : ''}>
           <Header route={route} setRoute={goRoute} onOpenReel={() => setReelOpen(true)} />
-          <main>
+          <main id="main" tabIndex="-1">
             {route === 'home' && (
               <div data-screen-label="Home">
                 <Hero onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />

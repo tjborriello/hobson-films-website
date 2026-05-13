@@ -1,4 +1,28 @@
 /* global React, PrimaryBtn, OutlineBtn, HeroScrollBg, Marquee */
+const { useState: useStateHero, useEffect: useEffectHero } = React;
+
+function ScrollHint() {
+  // Subtle down-arrow that confirms the page is scroll-driven, then fades
+  // permanently once the user has scrolled at all.
+  const [dismissed, setDismissed] = useStateHero(false);
+  useEffectHero(() => {
+    if (window.scrollY > 50) { setDismissed(true); return; }
+    const onScroll = () => {
+      if (window.scrollY > 50) {
+        setDismissed(true);
+        window.removeEventListener('scroll', onScroll);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <div className={`hf-scroll-hint${dismissed ? ' is-dismissed' : ''}`} aria-hidden="true">
+      Scroll
+      <span className="hf-scroll-hint__arrow"></span>
+    </div>
+  );
+}
 
 function Hero({ onOpenReel, setRoute }) {
   // Outer wrap is taller than the viewport; the inner section sticks to the
@@ -26,6 +50,7 @@ function Hero({ onOpenReel, setRoute }) {
             </div>
           </div>
         </div>
+        <ScrollHint />
       </section>
       <Marquee />
     </div>

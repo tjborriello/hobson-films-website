@@ -7,9 +7,97 @@
 html, body { margin: 0; background: var(--bg); color: var(--fg); }
 body { overflow-x: hidden; }
 #root { min-height: 100vh; display: flex; flex-direction: column; }
-main { flex: 1; }
+main { flex: 1; outline: none; }
 button { font-family: inherit; }
 img { display: block; }
+
+/* ─── Accessibility: skip-to-content link ─────────────────────── */
+/* Visually hidden until a keyboard user tabs to it. */
+.hf-skip {
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 1000;
+  padding: 12px 18px;
+  background: var(--hf-orange);
+  color: var(--hf-bone);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 2px solid var(--hf-orange);
+  border-radius: 2px;
+  transform: translateY(-200%);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.hf-skip:focus,
+.hf-skip:focus-visible { transform: translateY(0); outline: none; }
+
+/* ─── Accessibility: keyboard focus ring (global) ─────────────── */
+/* Pointer users see no outline; keyboard users get the brand orange ring. */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--hf-orange);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+/* Don't ring images, scroll containers, or main when focus is programmatic. */
+img:focus-visible, main:focus-visible { outline: none; }
+
+/* ─── Hero scroll hint ────────────────────────────────────────── */
+/* Subtle down-arrow that fades out after the first scroll. */
+.hf-scroll-hint {
+  position: fixed;
+  bottom: 110px; /* sit above the marquee on mobile, low-third on desktop */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+  color: var(--fg-inverse);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: hfScrollHintAppear 600ms var(--ease-out) 1.2s forwards,
+             hfScrollHintBob 2.4s var(--ease-in-out) 1.8s infinite;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+.hf-scroll-hint__arrow {
+  display: block;
+  margin: 6px auto 0;
+  width: 1px; height: 28px;
+  background: currentColor;
+  position: relative;
+}
+.hf-scroll-hint__arrow::after {
+  content: "";
+  position: absolute;
+  left: -3px; bottom: 0;
+  width: 7px; height: 7px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.hf-scroll-hint.is-dismissed {
+  animation: none;
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+@keyframes hfScrollHintAppear {
+  to { opacity: 0.7; }
+}
+@keyframes hfScrollHintBob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hf-scroll-hint { animation: none; opacity: 0.7; }
+}
+@media (max-width: 768px) {
+  /* Lift higher on mobile so it doesn't fight the sticky-bottom marquee. */
+  .hf-scroll-hint { bottom: 140px; }
+}
 
 /* ─── Buttons ─────────────────────────────────────────────────── */
 .hf-btn {
@@ -346,8 +434,11 @@ img { display: block; }
 }
 .hf-marquee__track {
   display: flex; gap: 64px;
-  animation: hfMarquee 6.5s linear infinite;
+  animation: hfMarquee 10s linear infinite;
   white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hf-marquee__track { animation: none; }
 }
 .hf-marquee__item {
   display: inline-flex; align-items: center; gap: 14px;
