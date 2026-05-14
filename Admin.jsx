@@ -23,14 +23,19 @@ function AdminBar({ adminOn, onToggle, onAdd, onReset, onExport }) {
           <button className="hf-admin-tools__btn hf-admin-tools__btn--danger" onClick={onReset}>Reset to seed</button>
         </div>
       )}
-      <button
-        className={`hf-admin-toggle${adminOn ? ' is-on' : ''}`}
-        onClick={onToggle}
-        title={adminOn ? 'Exit edit mode (⌘E)' : 'Edit portfolio (⌘E)'}
-        aria-label={adminOn ? 'Exit edit mode' : 'Edit portfolio'}
-      >
-        {adminOn ? <>● Editing — done</> : '✎'}
-      </button>
+      {/* Admin mode is summoned via the Cmd/Ctrl+E shortcut (registered in the
+          useEffect above). No public-facing button — the visible affordance only
+          appears once admin mode is on, so the user has a way to exit. */}
+      {adminOn && (
+        <button
+          className="hf-admin-toggle is-on"
+          onClick={onToggle}
+          title="Exit edit mode (⌘E)"
+          aria-label="Exit edit mode"
+        >
+          ● Editing — done
+        </button>
+      )}
     </>
   );
 }
