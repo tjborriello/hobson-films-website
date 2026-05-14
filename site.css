@@ -1475,3 +1475,178 @@ img:focus-visible, main:focus-visible { outline: none; }
   .hf-header__hamburger { display: flex; }
   .hf-header__cta { display: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   About page — editorial expansion
+   Used only on /about. Reuses .hf-about strip as the header, then
+   adds: Approach (light) → Process (dark) → Where & gear (paper).
+   ═══════════════════════════════════════════════════════════════ */
+
+.hf-aboutpage__approach,
+.hf-aboutpage__process,
+.hf-aboutpage__where {
+  padding: clamp(64px, 10vw, 128px) 0;
+}
+.hf-aboutpage__approach { background: var(--bg); color: var(--fg); }
+.hf-aboutpage__process  { background: var(--hf-ink); color: var(--fg-inverse); }
+.hf-aboutpage__where    { background: var(--hf-paper); color: var(--fg); }
+
+.hf-aboutpage__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.hf-aboutpage__sec-head { max-width: 60ch; margin: 0 0 64px; }
+.hf-aboutpage__h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5.2vw, var(--text-4xl));
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tightest);
+  text-wrap: balance;
+  margin: 16px 0 0;
+}
+.hf-aboutpage__h2 em {
+  font-style: italic;
+  color: var(--hf-orange);
+}
+.hf-aboutpage__lead {
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--fg-secondary);
+  margin: 24px 0 0;
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+.hf-aboutpage__body {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  margin: 16px 0 0;
+  max-width: 52ch;
+}
+
+/* ─── Approach: three principles ─────────────────────────────── */
+.hf-aboutpage__principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+.hf-principle {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.hf-principle__num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-meta);
+  letter-spacing: 0.18em;
+  color: var(--hf-orange);
+  margin-bottom: 20px;
+}
+.hf-principle__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+  margin: 0 0 16px;
+}
+.hf-principle__body {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--fg-secondary);
+  margin: 0;
+}
+
+/* ─── Process: three steps ───────────────────────────────────── */
+.hf-process {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 56px;
+}
+.hf-process__step {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  border-top: 1px solid var(--border-inverse);
+  padding-top: 32px;
+}
+.hf-process__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-meta);
+  letter-spacing: 0.18em;
+  color: var(--hf-orange);
+  padding-top: 4px;
+}
+.hf-process__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 2.5vw, var(--text-3xl));
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 16px;
+  color: var(--fg-inverse);
+}
+.hf-process__step p {
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--fg-inverse-secondary);
+  margin: 0;
+  max-width: 56ch;
+}
+
+/* ─── Where & gear: two-column ───────────────────────────────── */
+.hf-aboutpage__where-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.hf-aboutpage__gear {
+  border-left: 1px solid var(--border);
+  padding-left: 48px;
+}
+.hf-aboutpage__gear-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 16px 0 0;
+}
+.hf-aboutpage__gear-cta { margin-top: 24px; }
+
+/* ─── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hf-aboutpage__approach,
+  .hf-aboutpage__process,
+  .hf-aboutpage__where { padding: 64px 0; }
+
+  .hf-aboutpage__sec-head { margin-bottom: 40px; }
+
+  .hf-aboutpage__principles { grid-template-columns: 1fr; gap: 32px; }
+
+  .hf-process { gap: 40px; }
+  .hf-process__step {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-top: 24px;
+  }
+  .hf-process__label { padding-top: 0; }
+
+  .hf-aboutpage__where-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .hf-aboutpage__gear {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-left: 0;
+    padding-top: 40px;
+    margin-top: 40px;
+  }
+}

@@ -27,7 +27,7 @@
   <meta name="twitter:description" content="Cinematography by Rob Hobson, DP. Music, sports, reality, and corporate." />
   <meta name="twitter:image" content="assets/hero-frames/frame-0097.jpg" />
 
-  <link rel="stylesheet" href="site.css?v=36" />
+  <link rel="stylesheet" href="site.css?v=37" />
 </head>
 <body>
   <a class="hf-skip" href="#main">Skip to content</a>
@@ -167,7 +167,7 @@
             )}
             {route === 'about' && (
               <div data-screen-label="About">
-                <About setRoute={goRoute} asPage />
+                <AboutPage setRoute={goRoute} />
                 <CtaStrip onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
               </div>
             )}
