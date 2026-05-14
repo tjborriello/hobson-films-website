@@ -96,7 +96,7 @@ function AboutPage({ setRoute }) {
         <div className="hf-aboutpage__inner">
           <div className="hf-aboutpage__sec-head">
             <span className="hf-eyebrow" style={{color: 'var(--hf-orange)'}}>PROCESS</span>
-            <h2 className="hf-aboutpage__h2">How a <em>shoot goes.</em></h2>
+            <h2 className="hf-aboutpage__h2">From call to <em>cut.</em></h2>
           </div>
           <ol className="hf-process">
             <li className="hf-process__step">
