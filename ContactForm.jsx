@@ -13,8 +13,8 @@ function ContactForm() {
           <h2 className="hf-contact__title">Tell me<br/><em>about it.</em></h2>
           <p className="hf-contact__lead">Booking music videos, broadcast, sports, and brand work. I usually reply within a day. Day rates and crew packages on request.</p>
           <div className="hf-contact__direct">
-            <div><div className="hf-meta">EMAIL</div><div className="hf-contact__direct-val" style={{color: 'var(--hf-orange)'}}>rob@hobsonfilms.com</div></div>
-            <div><div className="hf-meta">PHONE</div><div className="hf-contact__direct-val">+1 (212) 555 0184</div></div>
+            <div><div className="hf-meta">EMAIL</div><a className="hf-contact__direct-val hf-contact__direct-val--link" href="mailto:hobsontv@gmail.com" style={{color: 'var(--hf-orange)'}}>hobsontv@gmail.com</a></div>
+            <div><div className="hf-meta">INSTAGRAM</div><a className="hf-contact__direct-val hf-contact__direct-val--link" href="https://www.instagram.com/hobsonfilms" target="_blank" rel="noopener noreferrer">@hobsonfilms ↗</a></div>
             <div><div className="hf-meta">BASED</div><div className="hf-contact__direct-val">NY / NJ</div></div>
             <div><div className="hf-meta">SHOOTS</div><div className="hf-contact__direct-val">Anywhere on location</div></div>
           </div>

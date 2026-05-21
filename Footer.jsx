@@ -30,15 +30,12 @@ function Footer({ setRoute, onOpenReel }) {
             </div>
             <div>
               <div className="hf-footer__label">Follow</div>
-              <a href="#" onClick={(e) => e.preventDefault()}>Instagram ↗</a>
-              <a href="#" onClick={(e) => e.preventDefault()}>Vimeo ↗</a>
-              <a href="#" onClick={(e) => e.preventDefault()}>IMDb ↗</a>
-              <a href="#" onClick={(e) => e.preventDefault()}>LinkedIn ↗</a>
+              <a href="https://www.instagram.com/hobsonfilms" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+              <a href="https://vimeo.com/user5534744" target="_blank" rel="noopener noreferrer">Vimeo ↗</a>
             </div>
             <div>
               <div className="hf-footer__label">Booking</div>
-              <span style={{fontSize: 14, color: 'var(--hf-orange)'}}>rob@hobsonfilms.com</span>
-              <span style={{fontSize: 14}}>+1 (212) 555 0184</span>
+              <a href="mailto:hobsontv@gmail.com" style={{fontSize: 14, color: 'var(--hf-orange)'}}>hobsontv@gmail.com</a>
               <span style={{fontSize: 14, color: 'var(--fg-muted)'}}>NJ / NYC</span>
             </div>
           </div>
