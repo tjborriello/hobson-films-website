@@ -29,9 +29,11 @@
 
   <link rel="stylesheet" href="site.css?v=37" />
 
-  <!-- Cloudflare Turnstile (Captcha for the contact form). Auto-renders the
-       widget when ContactForm.jsx mounts a div with className="cf-turnstile". -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <!-- Cloudflare Turnstile (Captcha for the contact form). Explicit-render mode:
+       ContactForm.jsx calls window.turnstile.render() once it mounts. Required
+       because Turnstile's auto-render does NOT watch for dynamically-added
+       widgets, and the contact form is rendered by React after script load. -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 <body>
   <a class="hf-skip" href="#main">Skip to content</a>

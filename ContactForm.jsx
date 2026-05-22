@@ -1,5 +1,5 @@
 /* global React, PrimaryBtn, OutlineBtn */
-const { useState: useStateCF } = React;
+const { useState: useStateCF, useEffect: useEffectCF, useRef: useRefCF } = React;
 
 // Web3Forms access key is meant to be public (the access key is a form-routing
 // identifier, not a secret — Web3Forms verifies submissions via origin +
@@ -13,7 +13,44 @@ function ContactForm() {
   const [form, setForm] = useStateCF(HF_FORM_INITIAL);
   const [submitting, setSubmitting] = useStateCF(false);
   const [error, setError] = useStateCF(null);
+  const turnstileContainerRef = useRefCF(null);
+  const turnstileWidgetIdRef = useRefCF(null);
   const upd = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  // Explicitly render the Turnstile widget once mounted (and re-render on
+  // "Send another" after a successful submission). Turnstile's auto-render
+  // does NOT pick up dynamically-added widgets in SPAs — we have to call
+  // window.turnstile.render() ourselves and poll until the api.js script
+  // finishes loading.
+  useEffectCF(() => {
+    if (sent) return;
+    if (turnstileWidgetIdRef.current !== null) return;
+    let cancelled = false;
+    const tryRender = () => {
+      if (cancelled) return;
+      if (!turnstileContainerRef.current) return;
+      if (window.turnstile && typeof window.turnstile.render === 'function') {
+        try {
+          turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+            sitekey: HF_TURNSTILE_SITE_KEY,
+            theme: 'light',
+          });
+        } catch (err) {
+          console.error('Turnstile render failed:', err);
+        }
+      } else {
+        setTimeout(tryRender, 100);
+      }
+    };
+    tryRender();
+    return () => {
+      cancelled = true;
+      if (window.turnstile && turnstileWidgetIdRef.current !== null) {
+        try { window.turnstile.remove(turnstileWidgetIdRef.current); } catch (_) {}
+        turnstileWidgetIdRef.current = null;
+      }
+    };
+  }, [sent]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,9 +81,16 @@ function ContactForm() {
         setSent(true);
       } else {
         setError(json.message || 'Could not send. Please email hobsontv@gmail.com directly.');
+        // Turnstile tokens are single-use; reset so the user can retry.
+        if (window.turnstile && turnstileWidgetIdRef.current !== null) {
+          try { window.turnstile.reset(turnstileWidgetIdRef.current); } catch (_) {}
+        }
       }
     } catch (err) {
       setError('Could not reach the form service. Please email hobsontv@gmail.com directly.');
+      if (window.turnstile && turnstileWidgetIdRef.current !== null) {
+        try { window.turnstile.reset(turnstileWidgetIdRef.current); } catch (_) {}
+      }
     } finally {
       setSubmitting(false);
     }
@@ -91,8 +135,10 @@ function ContactForm() {
               <label className="hf-form__full"><span>Tell me about it</span><textarea name="brief" rows="5" value={form.brief} onChange={upd('brief')} placeholder="Short brief, location, references."></textarea></label>
               {/* Honeypot — bots fill hidden fields, humans don't. */}
               <input type="checkbox" name="botcheck" tabIndex="-1" autoComplete="off" style={{display: 'none'}} />
-              {/* Cloudflare Turnstile widget — auto-rendered by the script in index.html. */}
-              <div className="cf-turnstile hf-form__full" data-sitekey={HF_TURNSTILE_SITE_KEY} data-theme="light"></div>
+              {/* Cloudflare Turnstile widget — rendered explicitly via useEffect above.
+                  Min-height reserves space so the form layout doesn't shift when the
+                  widget appears. */}
+              <div ref={turnstileContainerRef} className="hf-form__full" style={{minHeight: '65px'}}></div>
               {error && (
                 <p className="hf-form__full" style={{margin: 0, color: '#FF6B6B', fontSize: 14, lineHeight: 1.4}} role="alert">{error}</p>
               )}
