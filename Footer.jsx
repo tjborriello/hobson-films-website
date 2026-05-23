@@ -1,6 +1,6 @@
 /* global React */
 
-function Footer({ setRoute, onOpenReel }) {
+function Footer({ setRoute }) {
   return (
     <footer className="hf-footer" data-screen-label="Footer">
       <div className="hf-footer__inner">
@@ -18,7 +18,6 @@ function Footer({ setRoute, onOpenReel }) {
               <button onClick={() => setRoute('work')}>Work</button>
               <button onClick={() => setRoute('about')}>About</button>
               <button onClick={() => setRoute('contact')}>Contact</button>
-              <button onClick={onOpenReel}>Reel 2026</button>
             </div>
             <div>
               <div className="hf-footer__label">Credits</div>

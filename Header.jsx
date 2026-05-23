@@ -1,7 +1,7 @@
 /* global React, PrimaryBtn, OutlineBtn */
 const { useState: useStateH, useEffect: useEffectH } = React;
 
-function Header({ route, setRoute, onOpenReel, adminOn }) {
+function Header({ route, setRoute, adminOn }) {
   const [scrolled, setScrolled] = useStateH(false);
   const [menuOpen, setMenuOpen] = useStateH(false);
   useEffectH(() => {
@@ -43,10 +43,6 @@ function Header({ route, setRoute, onOpenReel, adminOn }) {
             ))}
           </nav>
           <div className="hf-header__cta">
-            <button className="hf-header__reel" onClick={onOpenReel}>
-              <span className="hf-header__reel-dot"></span>
-              Reel 2026
-            </button>
             <PrimaryBtn sm onClick={() => go('contact')}>Start your project →</PrimaryBtn>
           </div>
           <button
@@ -71,10 +67,6 @@ function Header({ route, setRoute, onOpenReel, adminOn }) {
               </button>
             ))}
             <div className="hf-mobilemenu__divider"></div>
-            <button className="hf-mobilemenu__reel" onClick={() => { onOpenReel(); setMenuOpen(false); }}>
-              <span className="hf-header__reel-dot"></span>
-              Watch Reel 2026
-            </button>
             <PrimaryBtn onClick={() => go('contact')}>Start your project →</PrimaryBtn>
           </nav>
         </div>

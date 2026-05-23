@@ -24,7 +24,7 @@ function ScrollHint() {
   );
 }
 
-function Hero({ onOpenReel, setRoute }) {
+function Hero({ setRoute }) {
   // Outer wrap is taller than the viewport; the inner section sticks to the
   // top while the user scrolls through the wrap's height. The wrap's scroll
   // progress drives HeroScrollBg's frame index. Once the wrap is fully
@@ -45,8 +45,7 @@ function Hero({ onOpenReel, setRoute }) {
             <h1 className="hf-hero__title">Capturing<br/><em>your world.</em></h1>
             <p className="hf-hero__lead">Cinematography for music, sports, reality, and corporate. A one-DP studio shooting for broadcast and brands — image-driven, story-led, color final in-camera.</p>
             <div className="hf-hero__actions">
-              <PrimaryBtn onClick={onOpenReel}>▸ Watch full reel</PrimaryBtn>
-              <OutlineBtn dark onClick={() => setRoute('work')}>View work →</OutlineBtn>
+              <PrimaryBtn onClick={() => setRoute('work')}>View work →</PrimaryBtn>
             </div>
           </div>
         </div>

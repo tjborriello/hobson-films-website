@@ -52,7 +52,6 @@
   <script type="text/babel" src="Hero.jsx"></script>
   <script type="text/babel" src="WorkGrid.jsx"></script>
   <script type="text/babel" src="ProjectDetail.jsx"></script>
-  <script type="text/babel" src="ReelOverlay.jsx"></script>
   <script type="text/babel" src="VimeoModal.jsx"></script>
   <script type="text/babel" src="ContactForm.jsx"></script>
   <script type="text/babel" src="About.jsx"></script>
@@ -64,7 +63,6 @@
     function App() {
       const [route, setRoute] = useState('home');
       const [project, setProject] = useState(null);
-      const [reelOpen, setReelOpen] = useState(false);
       const [vimeoFor, setVimeoFor] = useState(null); // project, or null
       const [filter, setFilter] = useState('All');
       const [projects, setProjectsState] = useState(loadProjects());
@@ -136,11 +134,11 @@
 
       return (
         <div className={isLightPage ? 'is-light-page' : ''}>
-          <Header route={route} setRoute={goRoute} onOpenReel={() => setReelOpen(true)} />
+          <Header route={route} setRoute={goRoute} />
           <main id="main" tabIndex="-1">
             {route === 'home' && (
               <div data-screen-label="Home">
-                <Hero onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
+                <Hero setRoute={goRoute} />
                 <WorkGrid
                   projects={projects}
                   filter={filter}
@@ -154,7 +152,7 @@
                 />
                 <Stats />
                 <About setRoute={goRoute} />
-                <CtaStrip onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
+                <CtaStrip setRoute={goRoute} />
               </div>
             )}
             {route === 'work' && (
@@ -174,7 +172,7 @@
             {route === 'about' && (
               <div data-screen-label="About">
                 <AboutPage setRoute={goRoute} />
-                <CtaStrip onOpenReel={() => setReelOpen(true)} setRoute={goRoute} />
+                <CtaStrip setRoute={goRoute} />
               </div>
             )}
             {route === 'project' && (
@@ -193,8 +191,7 @@
               </div>
             )}
           </main>
-          <Footer setRoute={goRoute} onOpenReel={() => setReelOpen(true)} />
-          <ReelOverlay open={reelOpen} onClose={() => setReelOpen(false)} />
+          <Footer setRoute={goRoute} />
           <VimeoModal project={vimeoFor} onClose={() => setVimeoFor(null)} />
           <AdminBar
             adminOn={adminOn}

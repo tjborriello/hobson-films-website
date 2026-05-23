@@ -35,7 +35,6 @@
     /* Hide all interactive / runtime chrome that doesn't make sense in a PDF. */
     .hf-admin-bar,
     .hf-modal,
-    .hf-reel,
     .hf-vimeo,
     .hf-tile__edit { display: none !important; }
 
@@ -101,7 +100,6 @@
   <script type="text/babel" src="Strips.jsx"></script>
   <script type="text/babel" src="WorkGrid.jsx"></script>
   <script type="text/babel" src="ProjectDetail.jsx"></script>
-  <script type="text/babel" src="ReelOverlay.jsx"></script>
   <script type="text/babel" src="VimeoModal.jsx"></script>
   <script type="text/babel" src="ContactForm.jsx"></script>
   <script type="text/babel" src="About.jsx"></script>
@@ -119,9 +117,9 @@
         <div className="pdf-show-all-tiles">
           {/* PAGE 1 — HOME */}
           <div className="pdf-page" data-screen-label="01 Home">
-            <Header route="home" setRoute={noop} onOpenReel={noop} />
+            <Header route="home" setRoute={noop} />
             <main>
-              <Hero onOpenReel={noop} setRoute={noop} />
+              <Hero setRoute={noop} />
               <Marquee />
               <WorkGrid
                 projects={projects}
@@ -132,14 +130,14 @@
               />
               <Stats />
               <About setRoute={noop} />
-              <CtaStrip onOpenReel={noop} setRoute={noop} />
+              <CtaStrip setRoute={noop} />
             </main>
-            <Footer setRoute={noop} onOpenReel={noop} />
+            <Footer setRoute={noop} />
           </div>
 
           {/* PAGE 2 — WORK */}
           <div className="pdf-page is-light-page" data-screen-label="02 Work">
-            <Header route="work" setRoute={noop} onOpenReel={noop} />
+            <Header route="work" setRoute={noop} />
             <main>
               <div className="hf-pad-top">
                 <WorkGrid
@@ -150,28 +148,28 @@
                 />
               </div>
             </main>
-            <Footer setRoute={noop} onOpenReel={noop} />
+            <Footer setRoute={noop} />
           </div>
 
           {/* PAGE 3 — ABOUT */}
           <div className="pdf-page" data-screen-label="03 About">
-            <Header route="about" setRoute={noop} onOpenReel={noop} />
+            <Header route="about" setRoute={noop} />
             <main>
               <About setRoute={noop} asPage />
-              <CtaStrip onOpenReel={noop} setRoute={noop} />
+              <CtaStrip setRoute={noop} />
             </main>
-            <Footer setRoute={noop} onOpenReel={noop} />
+            <Footer setRoute={noop} />
           </div>
 
           {/* PAGE 4 — CONTACT */}
           <div className="pdf-page is-light-page" data-screen-label="04 Contact">
-            <Header route="contact" setRoute={noop} onOpenReel={noop} />
+            <Header route="contact" setRoute={noop} />
             <main>
               <div className="hf-pad-top">
                 <ContactForm />
               </div>
             </main>
-            <Footer setRoute={noop} onOpenReel={noop} />
+            <Footer setRoute={noop} />
           </div>
         </div>
       );

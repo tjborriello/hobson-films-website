@@ -36,7 +36,7 @@ function About({ setRoute, asPage }) {
   );
 }
 
-function CtaStrip({ onOpenReel, setRoute }) {
+function CtaStrip({ setRoute }) {
   return (
     <section className="hf-ctaStrip" data-screen-label="CTA strip">
       <div className="hf-ctaStrip__inner">
@@ -45,7 +45,6 @@ function CtaStrip({ onOpenReel, setRoute }) {
           <p className="hf-ctaStrip__lead">Booking music videos, broadcast, sports, and brand work. Day rates and crew packages on request.</p>
           <div className="hf-ctaStrip__actions">
             <PrimaryBtn onClick={() => setRoute('contact')}>Start your project →</PrimaryBtn>
-            <OutlineBtn onClick={onOpenReel}>▸ Watch reel</OutlineBtn>
           </div>
           <span className="hf-ctaStrip__avail">
             Based NY / NJ · traveling for the shoot
