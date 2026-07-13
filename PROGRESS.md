@@ -22,3 +22,11 @@
 
 ## Don't touch
 - `data.jsx` edits: bump `STORAGE_KEY` (`v7`) on reorder; CSS cachebuster `site.css?v=37`; `.assetsignore` must exclude `.git/` (32MiB pack > CF 25MiB limit) — without it deploy fails.
+
+## Build recipe — hero frames (current, 97-frame era; repo CLAUDE.md's 73-frame recipe is stale)
+Regenerating `assets/hero-frames/` from a new `hero-source.mp4` (source video via Higgsfield Seedance 2.0; NSFW filter false-positives on words like "explosion" in prompts):
+```
+ffmpeg -i hero-source.mp4 -vf "scale=1024:-2" -fps_mode passthrough -q:v 4 assets/hero-frames/frame-%04d.jpg
+```
+ffmpeg full path (often not on PATH): `C:\Users\tjbor\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin\ffmpeg.exe`
+After regenerating: `HERO_BG_FRAME_COUNT` in `HeroScrollBg.jsx` must match frame count on disk (currently 97: frame-0001..0097, cachebuster `?v=3`). Pin tuning: `--hf-hero-anim: 150vh`, `--hf-hero-hold: 25vh`.
