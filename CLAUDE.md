@@ -83,9 +83,9 @@ When CSS or `data.jsx` changes affect what visitors see:
 
 ## Known open items (waiting on Rob's input — do not start without authorization)
 
-1. **Contact form does nothing.** `ContactForm.jsx` `onSubmit` just sets `sent: true` and discards the data. Decision pending on backend (Web3Forms / Formspree / Cloudflare Pages Function) and recipient email.
-2. **Placeholder contact info on the contact page**: email `rob@hobsonfilms.com` (unverified), phone `+1 (212) 555 0184` (a 555 fake), and "REPLIES WITHIN 24 HOURS" copy.
-3. **Vimeo videos return "Because of its privacy settings, this video cannot be played here."** — privacy/embed settings on each Vimeo video are owned by Rob. Free Vimeo plan limits domain-allowlist features.
+1. **Vimeo videos return "Because of its privacy settings, this video cannot be played here."** — privacy/embed settings on each Vimeo video are owned by Rob. Free Vimeo plan limits domain-allowlist features.
+
+(Contact form wiring and placeholder contact info were fixed 2026-05-20/22 — see `ContactForm.jsx` and `Footer.jsx`.)
 
 ## Hosting
 
