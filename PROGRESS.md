@@ -1,8 +1,16 @@
+## Sweep 2026-07-22
+**Git:** `main`, clean, HEAD `ffb3120` (2026-07-12, docs-only commit banking the hero regen recipe). Local is 1 commit ahead of `origin/main` (never pushed — that's fine, sweeps never push).
+**Live:** https://hobsonfilms.com verified HTTP 200; body confirmed correct site (title, OG tags, Turnstile key all match repo).
+**Since last sweep (2026-06-07):** no code changes, only the 07-12 docs commit. Open items below are unchanged.
+**Flag (not fixed, out of doc-edit scope):** repo `CLAUDE.md` "Known open items" section (lines 84-88) is stale — items 1 (contact form non-functional) and 2 (placeholder contact info) were both fixed 2026-05-20/22, before even the prior sweep. Item 4 (footer social links go nowhere) was also fixed the same commit. Only items 3 (Vimeo embed privacy — already marked resolved below) and 5 (content review) still apply. TJ or a future session should trim CLAUDE.md's stale item list.
+
+---
+
 # Hobson Films — handoff
 
 **What:** Portfolio site for Rob Hobson (DP). TJ maintains; Rob is client/subject.
 **Stack:** HTML + CSS + React via Babel-standalone (no build step). **Status: 🟢 LIVE / migration complete.**
-**Last worked:** 2026-05-23 · **Swept:** 2026-06-07 (verified live, HTTP 200).
+**Last worked:** 2026-07-12 (docs) / 2026-05-23 (last code change) · **Swept:** 2026-07-22 (verified live, HTTP 200).
 
 ## Where it lives
 - Live: https://hobsonfilms.com (+ www) — CF Workers static assets, auto-deploys on push to `main`
