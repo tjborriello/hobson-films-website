@@ -1,3 +1,31 @@
+## Portfolio sweep — 2026-08-05
+**Git (verified this run):**
+```
+$ git rev-parse --abbrev-ref HEAD   -> main
+$ git log --oneline -5
+4ecd47d docs: correct stale known-open-items in CLAUDE.md
+59abb32 docs: portfolio sweep 2026-07-22 - verify state + refresh handoff
+ffb3120 docs: bank current 97-frame hero regen recipe in PROGRESS
+f585cbc docs: portfolio-sweep handoff (current state + open items)
+bee0ebc Remove Reel 2026 link site-wide
+$ git status --short                -> (empty, clean)
+$ git log -1 --format=%cd --date=short -> 2026-07-22
+$ git status -sb                    -> ## main...origin/main [ahead 3]
+```
+**Live (verified this run):** `curl -o /dev/null -w "%{http_code}" -L https://hobsonfilms.com` → **200**.
+Body confirms correct site: `<title>Hobson Films — Capturing your world.</title>`.
+`https://hobsonfilms.com/sitemap.xml` → **404** (confirms the "no sitemap" line in the SEO note is still true).
+
+**Corrected this sweep:** the 2026-07-22 flag below ("repo CLAUDE.md open-items list is stale") is **RESOLVED** — commit `4ecd47d` trimmed it. CLAUDE.md now lists only the Vimeo-privacy item, which genuinely stays open because it lives in Rob's Vimeo account and cannot be verified from this repo. Auto-memory had also gone stale on this point and was rewritten.
+
+**Push state:** local is **3 commits ahead of origin/main, unpushed by design.** All three are docs-only. Pushing this repo IS deploying (Cloudflare auto-deploys `main`), so a sweep never pushes.
+
+**No code change since 2026-05-23.** Real last-worked date by git = 2026-07-22 (docs only).
+
+**NEXT:** waiting on Rob (site-wide content review) → waiting on Rob (correct Instagram login for the live feed) → hand-review the site structure before any SEO work.
+
+---
+
 ## Sweep 2026-07-22
 **Git:** `main`, clean, HEAD `ffb3120` (2026-07-12, docs-only commit banking the hero regen recipe). Local is 1 commit ahead of `origin/main` (never pushed — that's fine, sweeps never push).
 **Live:** https://hobsonfilms.com verified HTTP 200; body confirmed correct site (title, OG tags, Turnstile key all match repo).
