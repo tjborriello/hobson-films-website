@@ -1,5 +1,8 @@
 ## Portfolio sweep — 2026-08-05
 **Git (verified this run):**
+## 2026-08-12 — sitemap shipped + GSC submitted
+
+- [DONE] sitemap.xml live — `curl -sL .../sitemap.xml` → HTTP 200 with 1 loc (homepage; print.html deliberately excluded); submitted in Search Console on tj@tjoncall.com → "Sitemap submitted successfully". Property was domain-verified 08-11 night (see reference_gsc_business_account).
 ```
 $ git rev-parse --abbrev-ref HEAD   -> main
 $ git log --oneline -5
