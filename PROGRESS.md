@@ -69,3 +69,14 @@ ffmpeg -i hero-source.mp4 -vf "scale=1024:-2" -fps_mode passthrough -q:v 4 asset
 ```
 ffmpeg full path (often not on PATH): `C:\Users\tjbor\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin\ffmpeg.exe`
 After regenerating: `HERO_BG_FRAME_COUNT` in `HeroScrollBg.jsx` must match frame count on disk (currently 97: frame-0001..0097, cachebuster `?v=3`). Pin tuning: `--hf-hero-anim: 150vh`, `--hf-hero-hold: 25vh`.
+
+## Eval — Session (2026-08-13, independent verification)
+
+| Item | Claim | Verification command | Result |
+|------|-------|----------------------|--------|
+| sitemap.xml live | HTTP 200, 1 loc (homepage only, print.html excluded) | `curl -sS https://hobsonfilms.com/sitemap.xml` | Pass — 200, single `<url><loc>https://hobsonfilms.com/</loc></url>`, no print.html entry |
+| Homepage live | hobsonfilms.com serves 200 | `curl -o /dev/null -w "%{http_code}" -L https://hobsonfilms.com` | Pass — 200 |
+| GSC sitemap submitted successfully | Submitted on tj@tjoncall.com | `(no command available this session — no GSC MCP/browser tool connected; would need a GSC dashboard check on tj@tjoncall.com)` | Unverifiable |
+| GSC property domain-verified 08-11 | Verified on tj@tjoncall.com | `(same — GSC dashboard only)` | Unverifiable |
+
+**Verdict: SHIP** — the site-side claim (sitemap live, correct single-URL content) Passed exactly as described. The two GSC-dashboard claims are Unverifiable without a GSC/browser session; nothing contradicts them.
