@@ -13,9 +13,10 @@ wrangler.jsonc
 wrangler.toml
 node_modules/
 
-# Dev docs — not needed at runtime
-README.md
-CLAUDE.md
+# Dev docs — not needed at runtime, and MUST NOT be public: PROGRESS.md was
+# served at HTTP 200 on the live domain until 2026-08-17 (internal session logs
+# + the client's contact-form recipient email). Glob, so future docs are covered.
+*.md
 
 # Source media — only extracted hero frames are served, not the source video
 hero-source.mp4
