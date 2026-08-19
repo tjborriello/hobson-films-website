@@ -25,6 +25,11 @@ This is an intentionally **buildless** static site:
 - Component `.jsx` files (one component per file): `Buttons`, `Header`, `Footer`, `Hero`, `Strips` (Marquee + Stats), `WorkGrid`, `ProjectDetail`, `ReelOverlay`, `VimeoModal`, `ContactForm`, `About`, `Admin` (AdminBar + ProjectEditor)
 - `assets/`, `fonts/` — static assets
 - `.gitignore`, `README.md` (user-facing), `CLAUDE.md` (this file)
+- `.assetsignore` — **must exclude `*.md`.** WHY: Cloudflare serves every tracked file. On 2026-08-17
+  `PROGRESS.md` was live at HTTP 200 on hobsonfilms.com, exposing internal session logs, git history,
+  and Rob's contact-form recipient email. README.md and CLAUDE.md were already excluded; PROGRESS.md
+  was missed, so the fix is a glob rather than one line per doc. Verify after a deploy:
+  `curl -o /dev/null -w '%{http_code}' https://hobsonfilms.com/PROGRESS.md` → 404.
 
 ## Workflow
 
