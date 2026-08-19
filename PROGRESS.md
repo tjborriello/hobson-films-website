@@ -80,3 +80,27 @@ After regenerating: `HERO_BG_FRAME_COUNT` in `HeroScrollBg.jsx` must match frame
 | GSC property domain-verified 08-11 | Verified on tj@tjoncall.com | `(same — GSC dashboard only)` | Unverifiable |
 
 **Verdict: SHIP** — the site-side claim (sitemap live, correct single-URL content) Passed exactly as described. The two GSC-dashboard claims are Unverifiable without a GSC/browser session; nothing contradicts them.
+
+## Session 2026-08-18 — canonical fix + host consolidation (portfolio-wide pass)
+
+Triggered by Google Search Console "new reasons prevent pages from being indexed" mail on 2026-08-17.
+Full cross-site analysis lives in `C:/Users/tjbor/Claude/seo-engine/PROGRESS.md` (session 2026-08-18/19).
+
+- [DONE] Absolute, self-referencing canonical on every page, byte-matched to this site's sitemap
+  `<loc>` (same scheme, same host, same trailing-slash form). Verified live in the served HTML.
+- [DONE] `www` → apex 301 Redirect Rule on the Cloudflare zone, plus Always Use HTTPS.
+  Verified: 301 preserving path AND query, apex still 200, no loop, worst case one hop.
+
+**WARN — Cloudflare mechanics, learned the hard way 2026-08-18:**
+- A Workers/Pages Custom Domain binds apex AND www and redirects NEITHER. That default is why every
+  page answered at four addresses and why Google filed duplicate-host warnings.
+- **Page Rules do NOT work for this.** A `forwarding_url` Page Rule is accepted as `active` and never
+  fires, because the Custom Domain serves the request first. Use a **Redirect Rule**
+  (`http_request_dynamic_redirect` phase) — those run earlier. Token: `$CLOUDFLARE_RULES_TOKEN`.
+- Point the redirect the SAME direction as the site's canonical. Check the canonical first.
+- Full runbook with both API calls: `wiki/design/launch-checklist.md` section 2.
+
+**SECURITY [DONE] — `PROGRESS.md` was publicly served on this domain at HTTP 200 until 2026-08-17.**
+A Workers-assets site serves EVERY tracked file, and `.assetsignore` listed only individual docs.
+Closed with a `*.md` glob; the hard rule now lives in this repo's rule file with its why.
+Verify after any deploy: `curl -o /dev/null -w '%{http_code}' https://<domain>/PROGRESS.md` → 404.
